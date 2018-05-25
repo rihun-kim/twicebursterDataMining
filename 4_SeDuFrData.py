@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 #
 #
-# 수업시 Duration, Frequency
+# 수업시 Session, Duration, Frequency
 outClasses = ["프로그래밍기초", "일반물리학실험", "일반화학실헝", " 역사학특강", "사회과학특강", "영문학특강", "발상과 표현", "심리철학", "AdvancedEnglish", "빛,생명,그리고색체", "문제해결기법", "EnglishPresentation&Discussion"]
 studentsData = []
 for studentIndex in range(0, 84):
@@ -13,28 +13,10 @@ for studentIndex in range(0, 84):
 
     #
     #
-    # 출석시간 뽑아내기
-    attendanceTimeArray = []
-    for attendanceRow in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID==" + "'" + getStudentID(studentIndex) + "'"):
-        skip = False
-        for cls in outClasses:
-            if cls in attendanceRow[1]:
-                skip = True
-                break
-        if not skip:
-            for row in attendanceRow[2:]:
-                if row == "":
-                    continue
-                attendanceTimeArray.append([attendanceRow[1], row.split("~")[0], row.split("~")[1]])
-
-    #
-    #
-    # 출석시간대 사용시간 뽑아내기
+    # 출석시간대 사용시간 준비하기
     classUsageArray = []
-    for className, entranceTime, exitTime in attendanceTimeArray:
-        for usageRow in sqlite3.connect(studentDataPath + "\\USAGEDATABASE.db").execute("SELECT * FROM USAGETABLE WHERE '" + entranceTime + "' <= STARTTIME and ENDTIME <= '" + exitTime + "'"):
-            classUsageArray.append([className, entranceTime, exitTime, usageRow[0], usageRow[1], usageRow[2], usageRow[3]])
-    # CLASSUSAGEDATABASEMAKING(studentDataPath + "\\CLASSUSAGEDATABASE.db", classUsageArray)
+    for row in sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT * FROM CLASSUSAGETABLE"):
+        classUsageArray.append(row)
 
     #
     #
@@ -53,24 +35,34 @@ for studentIndex in range(0, 84):
             elapsedSum += timeToSecFormating(elapsedRow)
         classUsageElapsedArray.append([round(elapsedSum, 3), len(elapsedArray)])
 
+    #
+    #
+    # Session, Duration, Frequency 평균값 구하기
     duration, frequency = 0, 0
     for index, row in enumerate(classUsageElapsedArray):
         duration += row[0]
         frequency += row[1]
 
-    studentsData.append([round(duration/len(classUsageElapsedArray), 3), round(frequency/len(classUsageElapsedArray), 3)])
+    length = len(classUsageElapsedArray)
+    studentsData.append([round(duration/frequency, 3), round(duration/length, 3), round(frequency/length, 3)])
 
 #
 #
 #
 # 전체 학생들의 수업시 Duration, Frequency 박스플롯 그리기
-durationTotal, frequencyTotal = [], []
+sessionTotal, durationTotal, frequencyTotal = [], [], []
 for row in studentsData:
-    durationTotal.append(row[0])
-    frequencyTotal.append(row[1])
+    sessionTotal.append(row[0])
+    durationTotal.append(row[1])
+    frequencyTotal.append(row[2])
+
+plt.boxplot(sessionTotal)
+plt.show()
 
 plt.boxplot(durationTotal)
 plt.show()
 
 plt.boxplot(frequencyTotal)
 plt.show()
+
+
