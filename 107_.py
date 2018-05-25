@@ -6,7 +6,7 @@ from pandas import DataFrame
 
 studentClassApnoTimeDic, studentClassApnoCountDic = {}, {}
 studentClassApnoTimeEntropyArray, studentClassApnoCountEntropyArray = [], []
-for studentIndex in range(0, 84):
+for studentIndex in range(0, 1):
     studentDataPath = getStudentDataPathing(studentIndex)
     print(studentDataPath)
 
@@ -25,38 +25,43 @@ for studentIndex in range(0, 84):
                 startTime = startRow[1]
                 classApnoArray.append([startRow[1], elapsedTimeCalculating(startTime, endTime), startRow[3]])
                 endTime = startTime
+                print(startRow)
+            print("--------")
     classApnoArray = sorted(classApnoArray, key=lambda low: low[0])
 
+
+
+
+    # #
+    # #
+    # # 사용시간, 사용횟수 추출하기
+    # deleteAppDic = {"com.lge.signboard":"", "com.lge.launcher2":"", "com.android.systemui":"", "com.lge.launcher3":"", "com.sec.android.app.launcher":"",
+    #                 "com.buzzpia.aqua.launcher":"", "com.skp.launcher":"", "com.campmobile.launcher":"", "com.phone.launcher.android":"", "com.fihtdc.foxlauncher":"", "android":""}
+    # classApnoTimeDic, classApnoCountDic = {}, {}
+    # for index, row in enumerate(classApnoArray):
+    #     if ("lge.signboard" in row[2]) and (row[1] > 60):
+    #         classApnoArray[index][2] = classApnoArray[index-1][2]
     #
+    #     if row[2] in deleteAppDic.keys():
+    #         continue
     #
-    # 사용시간, 사용횟수 추출하기
-    deleteAppDic = {"com.lge.signboard":"", "com.lge.launcher2":"", "com.android.systemui":"", "com.lge.launcher3":"", "com.sec.android.app.launcher":"",
-                    "com.buzzpia.aqua.launcher":"", "com.skp.launcher":"", "com.campmobile.launcher":"", "com.phone.launcher.android":"", "com.fihtdc.foxlauncher":"", "android":""}
-    classApnoTimeDic, classApnoCountDic = {}, {}
-    for index, row in enumerate(classApnoArray):
-        if ("lge.signboard" in row[2]) and (row[1] > 60):
-            classApnoArray[index][2] = classApnoArray[index-1][2]
-
-        if row[2] in deleteAppDic.keys():
-            continue
-
-        if row[2] in classApnoTimeDic.keys():
-            classApnoTimeDic[row[2]] += row[1]
-        else:
-            classApnoTimeDic[row[2]] = row[1]
-
-        if row[2] in classApnoCountDic.keys():
-            classApnoCountDic[row[2]] += 1
-        else:
-            classApnoCountDic[row[2]] = 1
-
-    classApnoTimeArray = sorted(classApnoTimeDic.items(), key=lambda row: row[1], reverse=True)
-    studentClassApnoTimeDic[getStudentID(studentIndex)] = [(index+1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoTimeArray) if index < 10]
-    studentClassApnoTimeEntropyArray.append(entropy([valueArray[2] for valueArray in studentClassApnoTimeDic[getStudentID(studentIndex)]]))
-
-    classApnoCountArray = sorted(classApnoCountDic.items(), key=lambda row: row[1], reverse=True)
-    studentClassApnoCountDic[getStudentID(studentIndex)] = [(index+1, row[0], row[1]) for index, row in enumerate(classApnoCountArray) if index < 10]
-    studentClassApnoCountEntropyArray.append(entropy([valueArray[2] for valueArray in studentClassApnoCountDic[getStudentID(studentIndex)]]))
+    #     if row[2] in classApnoTimeDic.keys():
+    #         classApnoTimeDic[row[2]] += row[1]
+    #     else:
+    #         classApnoTimeDic[row[2]] = row[1]
+    #
+    #     if row[2] in classApnoCountDic.keys():
+    #         classApnoCountDic[row[2]] += 1
+    #     else:
+    #         classApnoCountDic[row[2]] = 1
+    #
+    # classApnoTimeArray = sorted(classApnoTimeDic.items(), key=lambda row: row[1], reverse=True)
+    # studentClassApnoTimeDic[getStudentID(studentIndex)] = [(index+1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoTimeArray) if index < 10]
+    # studentClassApnoTimeEntropyArray.append(entropy([valueArray[2] for valueArray in studentClassApnoTimeDic[getStudentID(studentIndex)]]))
+    #
+    # classApnoCountArray = sorted(classApnoCountDic.items(), key=lambda row: row[1], reverse=True)
+    # studentClassApnoCountDic[getStudentID(studentIndex)] = [(index+1, row[0], row[1]) for index, row in enumerate(classApnoCountArray) if index < 10]
+    # studentClassApnoCountEntropyArray.append(entropy([valueArray[2] for valueArray in studentClassApnoCountDic[getStudentID(studentIndex)]]))
 
 
 
