@@ -179,11 +179,11 @@ for studentIndex in range(0, 84):
 #
 #
 # 누적 막대그래프 그리기
-studentIndex = [i for i in range(0, 84)]
+studentIndexArray = [i for i in range(0, 84)]
 studentsData = sorted(studentsData, key=lambda row: row[0])
 
-p1 = plt.bar(studentIndex, [row[0] for row in studentsData])
-p2 = plt.bar(studentIndex, [row[1] for row in studentsData])
+p1 = plt.bar(studentIndexArray, [row[0] for row in studentsData])
+p2 = plt.bar(studentIndexArray, [row[1] for row in studentsData])
 
 plt.show()
 
