@@ -2,6 +2,9 @@ from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 import matplotlib.pyplot as plt
 
+#
+#
+# 학생별 Top10 앱의 Duration, Frequency 엔트로피 값 구하기
 studentClassApnoDurationDic, studentClassApnoFrequencyDic = {}, {}
 studentClassApnoDurationEntropyArray, studentClassApnoFrequencyEntropyArray = [], []
 for studentIndex in range(0, 84):
