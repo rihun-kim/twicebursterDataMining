@@ -2,8 +2,7 @@ from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 import matplotlib.pyplot as plt
 
-from scipy import stats, polyval
-from pylab import plot, title, show, legend
+from scipy import stats
 
 #
 #

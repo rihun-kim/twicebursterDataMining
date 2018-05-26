@@ -52,11 +52,11 @@ for studentIndex in range(0, 84):
         else:
             classApnoCountDic[row[2]] = 1
 
-    classApnoTimeArray = sorted(classApnoTimeDic.items(), key=lambda row: row[1], reverse=True)
-    studentClassApnoDurationDic[getStudentID(studentIndex)] = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoTimeArray) if index < 10]
+    classApnoDurationArray = sorted(classApnoTimeDic.items(), key=lambda row: row[1], reverse=True)
+    studentClassApnoDurationDic[getStudentID(studentIndex)] = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoDurationArray) if index < 10]
 
-    classApnoCountArray = sorted(classApnoCountDic.items(), key=lambda row: row[1], reverse=True)
-    studentClassApnoFrequencyDic[getStudentID(studentIndex)] = [(index + 1, row[0], row[1]) for index, row in enumerate(classApnoCountArray) if index < 10]
+    classApnoFrequencyArray = sorted(classApnoCountDic.items(), key=lambda row: row[1], reverse=True)
+    studentClassApnoFrequencyDic[getStudentID(studentIndex)] = [(index + 1, row[0], row[1]) for index, row in enumerate(classApnoFrequencyArray) if index < 10]
 
 #
 #
