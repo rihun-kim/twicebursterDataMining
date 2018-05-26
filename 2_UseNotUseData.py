@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 #
 #
 # 수업시간 스마트폰 사용유무 검출하기
-outClasses = ["프로그래밍기초", "일반물리학실험", "일반화학실헝", " 역사학특강", "사회과학특강", "영문학특강", "발상과 표현", "심리철학", "AdvancedEnglish", "빛,생명,그리고색체", "문제해결기법", "EnglishPresentation&Discussion"]
 studentsData = []
 for studentIndex in range(0, 84):
     studentDataPath = getStudentDataPathing(studentIndex)
@@ -14,14 +13,15 @@ for studentIndex in range(0, 84):
     #
     #
     # 출석시간 뽑아내기
+    classDic = {}
+    for row in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
+        startTime = datetime.datetime.strptime(list(row)[4][3:8], "%H:%M")
+        endTime = datetime.datetime.strptime(list(row)[4][12:], "%H:%M")
+        classDic[row[0]] = str(endTime - startTime)
+
     attendanceTimeArray = []
     for attendanceRow in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID==" + "'" + getStudentID(studentIndex) + "'"):
-        skip = False
-        for cls in outClasses:
-            if cls in attendanceRow[1]:
-                skip = True
-                break
-        if not skip:
+        if classDic[attendanceRow[1]] == "1:15:00":
             for row in attendanceRow[2:]:
                 if row == "":
                     continue
@@ -34,7 +34,7 @@ for studentIndex in range(0, 84):
     for className, entranceTime, exitTime in attendanceTimeArray:
         for usageRow in sqlite3.connect(studentDataPath + "\\USAGEDATABASE.db").execute("SELECT * FROM USAGETABLE WHERE '" + entranceTime + "' <= STARTTIME and ENDTIME <= '" + exitTime + "'"):
             classUsageArray.append([className, entranceTime, exitTime, usageRow[0], usageRow[1], usageRow[2], usageRow[3]])
-    # CLASSUSAGEDATABASEMAKING(studentDataPath + "\\CLASSUSAGEDATABASE.db", classUsageArray)
+    CLASSUSAGEDATABASEMAKING(studentDataPath + "\\CLASSUSAGEDATABASE.db", classUsageArray)
 
     #
     #

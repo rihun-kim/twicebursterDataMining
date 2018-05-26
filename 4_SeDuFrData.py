@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 #
 #
 # 수업시 Session, Duration, Frequency
-outClasses = ["프로그래밍기초", "일반물리학실험", "일반화학실헝", " 역사학특강", "사회과학특강", "영문학특강", "발상과 표현", "심리철학", "AdvancedEnglish", "빛,생명,그리고색체", "문제해결기법", "EnglishPresentation&Discussion"]
 studentsData = []
 for studentIndex in range(0, 84):
     studentDataPath = getStudentDataPathing(studentIndex)

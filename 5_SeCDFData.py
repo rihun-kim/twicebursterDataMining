@@ -64,7 +64,7 @@ plt.show()
 
 # #
 # #
-# # 수업이외시 Duration, Frequency
+# # 수업이외시 Duration, Frequency 해당 데이터가 필요할 때 쓸것
 # studentsData = []
 # for studentIndex in range(0, 84):
 #     studentDataPath = getStudentDataPathing(studentIndex)
