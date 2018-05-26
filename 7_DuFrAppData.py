@@ -2,6 +2,9 @@ from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 import matplotlib.pyplot as plt
 
+#
+#
+# 학생별 앱들 간의 Duration, Frequency 의 비율 구하기
 studentsClassApnoDurationDic, studentsClassApnoFrequencyDic = {}, {}
 for studentIndex in range(0, 84):
     studentDataPath = getStudentDataPathing(studentIndex)
