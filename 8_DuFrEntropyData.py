@@ -60,7 +60,6 @@ for studentIndex in range(0, 84):
     studentClassApnoFrequencyDic[getStudentID(studentIndex)] = [(index + 1, row[0], row[1]) for index, row in enumerate(classApnoFrequencyArray) if index < 10]
     studentClassApnoFrequencyEntropyArray.append(entropy([valueArray[2] for valueArray in studentClassApnoFrequencyDic[getStudentID(studentIndex)]]))
 
-
 #
 #
 # 엔트로피 박스플롯 그리기

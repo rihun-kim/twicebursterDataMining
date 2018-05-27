@@ -4,45 +4,89 @@ import matplotlib.pyplot as plt
 
 #
 #
+# 75분 수업만 뽑아내기
+class75MDic = {}
+for row in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
+    startTime = datetime.datetime.strptime(list(row)[4][3:8], "%H:%M")
+    endTime = datetime.datetime.strptime(list(row)[4][12:], "%H:%M")
+    if str(endTime - startTime) == "1:15:00":
+        class75MDic[row[0]] = [row[4], row[5]]
+
+#
+#
 # 전체학생 Bin 평균의 Duration, Frequency 박스플롯
-studentsData = []
-for studentIndex in range(0, 1):
+studentsDataDurationDic = {}
+for studentIndex in range(0, 2):
     studentDataPath = getStudentDataPathing(studentIndex)
     print(studentDataPath)
 
-    outClasses = ["프로그래밍기초", "일반물리학실험", "일반화학실헝", " 역사학특강", "사회과학특강", "영문학특강", "발상과 표현", "심리철학", "AdvancedEnglish", "빛,생명,그리고색체", "문제해결기법", "EnglishPresentation&Discussion"]
-    for scheduleRow in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
-        skip = False
-        for cls in outClasses:
-            if cls in scheduleRow[0]:
-                skip = True
-                break
-        if not skip:
-            if scheduleRow[4][3:8] == scheduleRow[5][3:8]:
-                print("true")
-            else:
-                print("false", scheduleRow)
-
-
-    # entranceTimeArray, exitTimeArray = [], []
-    # for attendanceArray in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID=='"+getStudentID(studentIndex)+"'"):
-    #     for row in attendanceArray:
-    #         if row[0:4] == "2017":
-    #             for val1, val2 in row.split("~"):
-    #                 entranceTimeArray.append(val1)
-    #                 exitTimeArray.append(val2)
     #
-    # for row1, row2 in (entranceTimeArray, exitTimeArray):
-    #     print(row1, row2)
+    #
+    # 출석시간 뽑아내기
+    attendanceTimeArray = []
+    for attendanceRow in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID==" + "'" + getStudentID(studentIndex) + "'"):
+        if attendanceRow[1] in class75MDic.keys():
+            for row in attendanceRow[2:]:
+                if row == "":
+                    continue
+                attendanceTimeArray.append([attendanceRow[1], row.split("~")[0], row.split("~")[1]])
 
+    #
+    # 수업 시작시간 뽑아내기
+    # 미시경제학, 회계원리만 퍼스트클래스와 세컨드클래스가 시간이 다르므로 따로 처리해야함
+    classStartTimeDic = {}
+    for attendanceRow in attendanceTimeArray:
+        firstClassTime = class75MDic[attendanceRow[0]][0]
+        # secondClassTime = classDic[attendanceRow[0]][1]
 
-    # for row in sqlite3.connect(getStudentDataPathing(studentIndex) + "\\CLASSUSAGEDATABASE.db").execute("SELECT * FROM CLASSUSAGETABLE"):
-    #     print(row)
+        startTime = attendanceRow[1][0:11] + firstClassTime[3:5] + "." + firstClassTime[6:8] + ".00.000"
 
+        if attendanceRow[0] in classStartTimeDic.keys():
+            classStartTimeDic[attendanceRow[0]].append(startTime)
+        else:
+            classStartTimeDic[attendanceRow[0]] = [startTime]
 
+    #
+    #
+    #
+    binArray = []
+    for className, usingStartTime, usingEndTime in sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT CLASSNAME, STARTTIME, ENDTIME FROM CLASSUSAGETABLE"):
+        for classStartTime in classStartTimeDic[className]:
+            if usingStartTime[:10] == classStartTime[:10]:
+                binArray.append([elapsedTimeCalculating(classStartTime, usingStartTime), elapsedTimeCalculating(classStartTime, usingEndTime)])
 
+    #
+    #
+    #
+    cnt = 0
+    dicDic = {}
+    for bin in binArray:
+        tempDic = {}
+        for sec in range(int(bin[0]), int(bin[1])+1):
+            for i in range(0, 15):
+                if i * 300 <= sec <= (i+1) * 300:
+                    if i in tempDic.keys():
+                        tempDic[i] = tempDic[i] + 1
+                    else:
+                        tempDic[i] = 1
 
+        for row in tempDic.items():
+            if row[0] in dicDic.keys():
+                dicDic[row[0]].append(row[1])
+            else:
+                dicDic[row[0]] = [row[1]]
 
+    for row in sorted(dicDic.items(), key=lambda row: row[0]):
+        if row[0] in studentsDataDurationDic.keys():
+            studentsDataDurationDic[row[0]].append(round(sum(row[1]) / len(row[1]), 3))
+        else:
+            studentsDataDurationDic[row[0]] = [round(sum(row[1]) / len(row[1]), 3)]
 
+#
+#
+#
+for row in studentsDataDurationDic.items():
+    plt.boxplot(row[1], row[0])
 
+plt.show()
 

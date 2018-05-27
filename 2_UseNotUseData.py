@@ -4,20 +4,20 @@ import matplotlib.pyplot as plt
 
 #
 #
+# 출석시간 뽑아내기
+classDic = {}
+for row in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
+    startTime = datetime.datetime.strptime(list(row)[4][3:8], "%H:%M")
+    endTime = datetime.datetime.strptime(list(row)[4][12:], "%H:%M")
+    classDic[row[0]] = str(endTime - startTime)
+
+#
+#
 # 수업시간 스마트폰 사용유무 검출하기
 studentsData = []
 for studentIndex in range(0, 84):
     studentDataPath = getStudentDataPathing(studentIndex)
     print(studentDataPath)
-
-    #
-    #
-    # 출석시간 뽑아내기
-    classDic = {}
-    for row in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
-        startTime = datetime.datetime.strptime(list(row)[4][3:8], "%H:%M")
-        endTime = datetime.datetime.strptime(list(row)[4][12:], "%H:%M")
-        classDic[row[0]] = str(endTime - startTime)
 
     attendanceTimeArray = []
     for attendanceRow in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID==" + "'" + getStudentID(studentIndex) + "'"):

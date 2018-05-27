@@ -32,6 +32,17 @@ def timeToSecFormating(tim):
 
     return datetime.timedelta(hours=int(HOUR), minutes=int(MIN), seconds=int(SEC), milliseconds=int(MIL)).total_seconds()
 
+def timeBinning(startTime, endTime):
+    startTime = datetime.datetime.strptime(startTime, "%Y.%m.%d_%H.%M.%S.%f")
+    endTime = datetime.datetime.strptime(endTime, "%Y.%m.%d_%H.%M.%S.%f")
+
+    bins = []
+    while startTime < endTime:
+        bins.append([startTime.strftime("%Y.%m.%d_%H.%M.%S.%f")[:-3], (startTime + datetime.timedelta(minutes=5)).strftime("%Y.%m.%d_%H.%M.%S.%f")[:-3]])
+        startTime += datetime.timedelta(minutes=5)
+
+    return bins
+
 def fileExisting(file):
     if os.path.isfile(file):
         os.remove(file)

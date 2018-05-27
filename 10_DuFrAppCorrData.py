@@ -53,10 +53,10 @@ for studentIndex in range(0, 84):
             classApnoFrequencyDic[row[2]] = 1
 
     classApnoDurationArray1 = sorted(classApnoDurationDic.items(), key=lambda row: row[1], reverse=True)
-    classApnoDurationArray2 = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoDurationArray1) if index < 3]
+    classApnoDurationArray2 = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoDurationArray1) if index < 10]
 
     classApnoFrequencyArray1 = sorted(classApnoFrequencyDic.items(), key=lambda row: row[1], reverse=True)
-    classApnoFrequencyArray2 = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoFrequencyArray1) if index < 3]
+    classApnoFrequencyArray2 = [(index + 1, row[0], round(row[1], 3)) for index, row in enumerate(classApnoFrequencyArray1) if index < 10]
 
     corrDic = {}
     for row in classApnoDurationArray2:
