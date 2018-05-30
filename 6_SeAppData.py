@@ -1,3 +1,5 @@
+from pandas import DataFrame
+
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 from multiprocessing import Process
@@ -180,12 +182,16 @@ for studentIndex in range(0, 84):
 #
 # 누적 막대그래프 그리기
 studentIndexArray = [i for i in range(0, 84)]
-studentsData = sorted(studentsData, key=lambda row: row[0])
+# studentsData = sorted(studentsData, key=lambda row: row[1])
 
-p1 = plt.bar(studentIndexArray, [row[0] for row in studentsData])
-p2 = plt.bar(studentIndexArray, [row[1] for row in studentsData])
+# p1 = plt.bar(studentIndexArray, [row[0] for row in studentsData])
+# p2 = plt.bar(studentIndexArray, [row[1] for row in studentsData])
+# plt.hist([row[1] for row in studentsData])
 
-plt.show()
+frame = DataFrame([row[1] for row in studentsData])
+frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\data.csv")
+
+# plt.show()
 
 
 

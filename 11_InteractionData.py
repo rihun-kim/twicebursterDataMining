@@ -41,5 +41,6 @@ for studentIndex, eachStudentData in enumerate(studentsData):
         plt.bar(studentIndex, value, color=top4Color[index])
 
 plt.xlabel("")
+plt.xticks(range(0, 84, 1))
 plt.ylabel("")
 plt.show()

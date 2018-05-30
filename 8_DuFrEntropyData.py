@@ -63,15 +63,15 @@ for studentIndex in range(0, 84):
 #
 #
 # 엔트로피 박스플롯 그리기
-plt.boxplot(studentClassApnoDurationEntropyArray)
-plt.xlabel("")
-plt.ylabel("Entropy of Duration")
-plt.show()
-
-plt.boxplot(studentClassApnoFrequencyEntropyArray)
-plt.xlabel("")
-plt.ylabel("Entropy of Frequency")
-plt.show()
+# plt.boxplot(studentClassApnoDurationEntropyArray)
+# plt.xlabel("")
+# plt.ylabel("Entropy of Duration")
+# plt.show()
+#
+# plt.boxplot(studentClassApnoFrequencyEntropyArray)
+# plt.xlabel("")
+# plt.ylabel("Entropy of Frequency")
+# plt.show()
 
 
 

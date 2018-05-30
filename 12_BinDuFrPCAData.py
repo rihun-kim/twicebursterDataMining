@@ -1,9 +1,7 @@
+from pandas import DataFrame
+
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
-
-import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
-import numpy as np
 
 #
 #
@@ -83,53 +81,39 @@ for studentIndex in range(0, 84):
 #
 #
 # 전체학생 Duration 박스플롯 그리기
-plt.boxplot([bin for bin in studentsDataDurationDic.values()])
-plt.show()
-
-#
-#
-# 전체학생 Duration PCA 그리기
-temp = []
-for row in studentsDataDurationDic.values():
-    temp.append(row)
-
-X = np.array(temp).T
-pca = PCA(n_components=2)
-pca.fit(X)
-Z = pca.transform(X)
-print("Duration")
-print(Z)
-plt.scatter(Z[:, 0], Z[:, 1])
-plt.xlabel("Duration")
-plt.show()
+# plt.boxplot([bin for bin in studentsDataDurationDic.values()])
+# plt.show()
 
 #
 #
 # 전체학생 Frequency 박스플롯, 꺾은선 그리기
-plt.boxplot([bin for bin in studentsFrequencyDic.values()])
-plt.show()
-
-plt.plot([bin for bin in studentsFrequencyDic.values()], linewidth=0.5)
-plt.xticks(range(0, 15, 1))
-plt.show()
-
+# plt.boxplot([bin for bin in studentsFrequencyDic.values()])
+# plt.show()
+#
+# plt.plot([bin for bin in studentsFrequencyDic.values()], linewidth=0.5)
+# plt.xticks(range(0, 15, 1))
+# plt.show()
 
 #
 #
-# 전체학생 Frequncy PCA 그리기
-temp = []
-for row in studentsFrequencyDic.values():
-    temp.append(row)
+# 사용시간, 사용횟수 bin 데이터 csv 로 출력하기
+frame = DataFrame(studentsDataDurationDic)
+frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\studentBinDurationDic.csv")
 
-X = np.array(temp).T
-pca = PCA(n_components=2)
-pca.fit(X)
-Z = pca.transform(X)
-print("Frequency")
-print(Z)
-plt.scatter(Z[:, 0], Z[:, 1])
-plt.xlabel("Frequency")
-plt.show()
+frame = DataFrame(studentsFrequencyDic)
+frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\studentBinFrequencyDic.csv")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

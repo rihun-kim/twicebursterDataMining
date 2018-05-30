@@ -2,6 +2,8 @@ import datetime
 import math
 import os
 import sqlite3
+import plotly.plotly as py
+import matplotlib.pyplot as plt
 
 
 #
@@ -140,7 +142,32 @@ def CLASSAPNODATABASEMAKING(file, classApnoArray):
     connect.close()
 
 
+#
+#
+# ploting
 
+def PLOTING3D(X, Y, Z):
+    scatter = dict(
+        mode="markers", name="y", type="scatter3d",
+        x=X, y=Y, z=Z,
+        marker=dict(size=2, color="rgb(23, 190, 207)")
+    )
+    clusters = dict(
+        alphahull=7, name="y", opacity=0.1, type="mesh3d",
+        x=X, y=Y, z=Z
+    )
+    layout = dict(
+        title='3d point clustering',
+        scene=dict(
+            xaxis=dict(zeroline=False),
+            yaxis=dict(zeroline=False),
+            zaxis=dict(zeroline=False),
+        )
+    )
+    fig = dict(data=[scatter, clusters], layout=layout)
+    py.plotly.tools.set_credentials_file(username='dhgkjdasf', api_key='cURhfnaDsgSDmOc0OHQw')
+    py.plot(fig, filename='3d point clustering')
+    plt.show()
 
 
 

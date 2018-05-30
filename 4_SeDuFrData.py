@@ -1,6 +1,10 @@
+from pandas import DataFrame
+from sklearn.decomposition import PCA
+
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 import matplotlib.pyplot as plt
+import numpy as np
 
 #
 #
@@ -55,13 +59,77 @@ for row in studentsData:
     durationTotal.append(row[1])
     frequencyTotal.append(row[2])
 
-plt.boxplot(sessionTotal)
-plt.show()
 
-plt.boxplot(durationTotal)
-plt.show()
+# plt.figure(figsize=(4, 5))
+# plt.boxplot(sessionTotal, labels=("session", ))
+# plt.show()
+#
+# plt.boxplot(durationTotal)
+# plt.show()
+#
+# plt.figure(figsize=(4, 5))
+# plt.boxplot(frequencyTotal, labels=("frequency", ))
+# plt.show()
 
-plt.boxplot(frequencyTotal)
-plt.show()
+# plt.scatter(sessionTotal, frequencyTotal)
+# plt.show()
+
+#
+#
+#
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
+# scaler = StandardScaler()
+# sessionStandardTotal = scaler.fit_transform([[row] for row in sessionTotal])
+# frequencyStandardTotal = scaler.fit_transform([[row] for row in frequencyTotal])
+#
+# sessionStandardTotal = [row[0] for row in sessionStandardTotal]
+# frequencyStandardTotal = [row[0] for row in frequencyStandardTotal]
+#
+# plt.scatter(sessionStandardTotal, frequencyStandardTotal)
+# plt.show()
+
+
+# X = np.array([[row[0], row[1]] for row in zip(sessionTotal, frequencyTotal)])
+# pca = PCA(n_components=2)
+# pca.fit(X)
+# Z = pca.transform(X)
+#
+# plt.scatter(Z[:,0], [0 for row in range(0, len(Z))], s=9)
+# plt.show()
+
+
+
+kmeans = KMeans(n_clusters=2).fit([[row1, row2] for row1, row2 in zip(sessionTotal, frequencyTotal)])
+LABEL_COLOR_MAP = {0:'r', 1:'k', 2:'m', 3:'y', 4:'g'}
+label_color = [LABEL_COLOR_MAP[l] for l in kmeans.labels_]
+
+
+
+
+# fig = plt.figure()
+# S = plt.scatter(sessionTotal, frequencyTotal, c=label_color)
+# ax1 = fig.add_subplot(S)
+# # plt.figure(figsize=(8, 8))
+#
+# plt.xlabel("session")
+# plt.ylabel("frequency")
+#
+#
+#
+# # plt.figure(figsize=(8, 2))
+# S = plt.boxplot(sessionTotal, vert=False)
+# ax2 = fig.add_subplot(S)
+# # plt.show()
+#
+# plt.figure(figsize=(2, 8))
+# plt.boxplot(frequencyTotal)
+# plt.show()
+#
+#
+#
+# plt.show()
+
 
 
