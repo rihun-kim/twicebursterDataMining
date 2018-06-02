@@ -169,3 +169,4 @@ plt.show()
 #
 # plt.boxplot((frequencyWeekdays, frequencyWeekend, frequencyTotal))
 # plt.show()
+

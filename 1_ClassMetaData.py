@@ -22,12 +22,12 @@ for row in sqlite3.connect(getDatabasePathing("METADATABASE.db")).execute("SELEC
     else:
         studentsDic[creditSum] = 1
 
-plt.bar(studentsDic.keys(), studentsDic.values())
-plt.xticks(range(9, 25, 1))
-plt.yticks(range(0, 20, 1))
-plt.xlabel("Registered credits of classes")
-plt.ylabel("Number of students")
-plt.show()
+# plt.bar(studentsDic.keys(), studentsDic.values())
+# plt.xticks(range(9, 25, 1))
+# plt.yticks(range(0, 20, 1))
+# plt.xlabel("Registered credits of classes")
+# plt.ylabel("Number of students")
+# plt.show()
 
 #
 #
@@ -51,10 +51,10 @@ for row in classes:
     else:
         cntDic[classDic[row]] = 1
 
-x_num = ["1;15:00", "1:45:00", "2:45:00", "3:00:00", "3:15:00"]
-y_cnt = [353, 30, 59, 1, 2]
-plt.bar(x_num, y_cnt)
-plt.yticks(range(0, 360, 20))
-plt.xlabel("Registered Classes' Time")
-plt.ylabel("Number of students' class")
-plt.show()
+# x_num = ["1;15:00", "1:45:00", "2:45:00", "3:00:00", "3:15:00"]
+# y_cnt = [353, 30, 59, 1, 2]
+# plt.bar(x_num, y_cnt)
+# plt.yticks(range(0, 360, 20))
+# plt.xlabel("Registered Classes' Time")
+# plt.ylabel("Number of students' class")
+# plt.show()

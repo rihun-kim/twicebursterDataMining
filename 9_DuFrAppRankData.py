@@ -1,3 +1,5 @@
+from pandas import DataFrame
+
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 
@@ -93,8 +95,14 @@ for name, count in sorted(rankDic.items(), key=lambda row:row[1], reverse=True):
     print(count, name)
     top10Cnt += 1
 
+#
+#
+# 사용시간, 사용횟수 Top10 앱 데이터 csv 로 출력하기
+frame = DataFrame(studentClassApnoDurationDic)
+frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\studentClassApnoTimeDic.csv")
 
-
+frame = DataFrame(studentClassApnoFrequencyDic)
+frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\studentClassApnoCountDic.csv")
 
 
 

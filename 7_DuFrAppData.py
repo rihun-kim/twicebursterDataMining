@@ -1,3 +1,5 @@
+from pandas import DataFrame
+
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
 import matplotlib.pyplot as plt
@@ -82,28 +84,29 @@ for studentIndex in range(0, 84):
 #
 #
 # 전체 사용시간, 사용횟수 그래프 그리기
-top10Color = ['#00B700', '#0BC904', '#1DDB16', '#41FF3A', '#53FF4C', '#65FF5E', '#77FF70', '#89FF82', '#9BFF94', '#ADFFA6']
-for studentIndex in range(0, 84):
-    for index, value in enumerate(studentsClassApnoDurationDic[studentIndex]):
-        if index <= 9:
-            plt.bar(studentIndex, value, color=top10Color[index])
-        else:
-            plt.bar(studentIndex, value)
+# top10Color = ['#00B700', '#0BC904', '#1DDB16', '#41FF3A', '#53FF4C', '#65FF5E', '#77FF70', '#89FF82', '#9BFF94', '#ADFFA6']
+# for studentIndex in range(0, 84):
+#     for index, value in enumerate(studentsClassApnoDurationDic[studentIndex]):
+#         if index <= 9:
+#             plt.bar(studentIndex, value, color=top10Color[index])
+#         else:
+#             plt.bar(studentIndex, value)
+#
+# plt.xlabel("")
+# plt.ylabel("Duration Ratio")
+# plt.show()
+#
+# for studentIndex in range(0, 84):
+#     for index, value in enumerate(studentsClassApnoFrequencyDic[studentIndex]):
+#         if index <= 9:
+#             plt.bar(studentIndex, value, color=top10Color[index])
+#         else:
+#             plt.bar(studentIndex, value)
+#
+# plt.xlabel("")
+# plt.ylabel("Frequency Ratio")
+# plt.show()
 
-plt.xlabel("")
-plt.ylabel("Duration Ratio")
-plt.show()
-
-for studentIndex in range(0, 84):
-    for index, value in enumerate(studentsClassApnoFrequencyDic[studentIndex]):
-        if index <= 9:
-            plt.bar(studentIndex, value, color=top10Color[index])
-        else:
-            plt.bar(studentIndex, value)
-
-plt.xlabel("")
-plt.ylabel("Frequency Ratio")
-plt.show()
 
 
 
