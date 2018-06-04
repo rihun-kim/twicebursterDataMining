@@ -46,50 +46,52 @@ for studentIndex in range(0, 84):
         else:
             classStartTimeDic[attendanceRow[0]] = [startTime]
 
+    # #
+    # #
+    # # 앱 Bin 데이터 추출하기
+    # apnoArray, appBinArray = [], []
+    # deleteAppDic = {"com.lge.signboard": "", "com.lge.launcher2": "", "com.android.systemui": "", "com.lge.launcher3": "", "com.sec.android.app.launcher": "",
+    #                 "com.buzzpia.aqua.launcher": "", "com.skp.launcher": "", "com.campmobile.launcher": "", "com.phone.launcher.android": "", "com.fihtdc.foxlauncher": "", "android": "",
+    #                 "com.cashwalk.cashwalk": ""}
+    # for timeStamp, type, package in sqlite3.connect(studentDataPath + "\\CLASSAPNODATABASE.db").execute("SELECT TIMESTAMP, TYPE, PACKAGE FROM CLASSAPNOTABLE WHERE TYPE=='RUNNING'"):
+    #     if package not in deleteAppDic:
+    #         apnoArray.append([timeStamp, type, package])
     #
+    # for className, exitTime in sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT CLASSNAME, EXITTIME FROM CLASSUSAGETABLE"):
+    #     for classStartTime in classStartTimeDic[className]:
+    #         for index, apnoRow in enumerate(apnoArray):
+    #             if classStartTime[:10] == apnoRow[0][:10] == exitTime[:10] and classStartTime[12:] < apnoRow[0][12:] <= exitTime[12:]:
+    #                 appBinArray.append([elapsedTimeCalculating(classStartTime, apnoRow[0]), apnoRow[2]])
+    #                 del(apnoArray[index])
+    #                 break
     #
-    # 앱 Bin 데이터 추출하기
-    apnoArray, appBinArray = [], []
-    deleteAppDic = {"com.lge.signboard": "", "com.lge.launcher2": "", "com.android.systemui": "", "com.lge.launcher3": "", "com.sec.android.app.launcher": "",
-                    "com.buzzpia.aqua.launcher": "", "com.skp.launcher": "", "com.campmobile.launcher": "", "com.phone.launcher.android": "", "com.fihtdc.foxlauncher": "", "android": "",
-                    "com.cashwalk.cashwalk": ""}
-    for timeStamp, type, package in sqlite3.connect(studentDataPath + "\\CLASSAPNODATABASE.db").execute("SELECT TIMESTAMP, TYPE, PACKAGE FROM CLASSAPNOTABLE WHERE TYPE=='RUNNING'"):
-        if package not in deleteAppDic:
-            apnoArray.append([timeStamp, type, package])
-
-    for className, exitTime in sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT CLASSNAME, EXITTIME FROM CLASSUSAGETABLE"):
-        for classStartTime in classStartTimeDic[className]:
-            for index, apnoRow in enumerate(apnoArray):
-                if classStartTime[:10] == apnoRow[0][:10] == exitTime[:10] and classStartTime[12:] < apnoRow[0][12:] <= exitTime[12:]:
-                    appBinArray.append([elapsedTimeCalculating(classStartTime, apnoRow[0]), apnoRow[2]])
-                    del(apnoArray[index])
-                    break
-
-    binDic = {}
-    for binTimeStamp, binName in appBinArray:
-        for binIndex in range(0, 15):
-            if binIndex * 300 <= binTimeStamp <= (binIndex + 1) * 300:
-                if binIndex in binDic.keys():
-                    if binName in binDic[binIndex].keys():
-                        binDic[binIndex][binName] += 1
-                        break
-                    else:
-                        binDic[binIndex][binName] = 1
-                else:
-                    binDic[binIndex] = {binName : 1}
-                    break
-
-    tempArray = []
-    for key, values in binDic.items():
-        cnt = 0
-        for index, row in enumerate(sorted(values.items(), key=lambda row : row[1], reverse=True)):
-            if index == 3:
-                break
-            tempArray.append([key, row])
-            cnt += 1
-        for i in range(cnt, 4):
-            tempArray.append([key, ("", "")])
-    studentsDataAppBinDic[studentIndex] = sorted(tempArray, key=lambda row : row[0])
+    # binDic = {}
+    # for binTimeStamp, binName in appBinArray:
+    #     for binIndex in range(0, 15):
+    #         if binIndex * 300 <= binTimeStamp <= (binIndex + 1) * 300:
+    #             if binIndex in binDic.keys():
+    #                 if binName in binDic[binIndex].keys():
+    #                     binDic[binIndex][binName] += 1
+    #                     break
+    #                 else:
+    #                     binDic[binIndex][binName] = 1
+    #             else:
+    #                 binDic[binIndex] = {binName : 1}
+    #                 break
+    #
+    # tempArray = []
+    # for key, values in binDic.items():
+    #     cnt = 0
+    #     for index, row in enumerate(sorted(values.items(), key=lambda row : row[1], reverse=True)):
+    #         if index == 3:
+    #             break
+    #         tempArray.append([key, row])
+    #         cnt += 1
+    #     for i in range(cnt, 4):
+    #         tempArray.append([key, ("", "")])
+    # for index in range(len(tempArray), 60):
+    #     tempArray.append([999, ("", "")])
+    # studentsDataAppBinDic[studentIndex] = sorted(tempArray, key=lambda row : row[0])
 
     #
     #
@@ -129,9 +131,29 @@ for studentIndex in range(0, 84):
 
 #
 #
+# 삭제요망망
+#firstDic, secondDic, thirdDic = {}, {}, {}
+# for student in studentsDataAppBinDic.values():
+#     for row in student:
+#         if row[0] == 0 or row[0] == 1:
+#             if row[1][0] not in firstDic.keys():
+#                 firstDic[row[1][0]] = 1
+#             else:
+#                 firstDic[row[1][0]] += 1
+#         elif row[0] == 8 or row[0] == 9:
+#             if row[1][0] not in secondDic.keys():
+#                 secondDic[row[1][0]] = 1
+#             else:
+#                 secondDic[row[1][0]] += 1
+#         elif row[0] == 13 or row[0] == 14:
+#             if row[1][0] not in thirdDic.keys():
+#                 thirdDic[row[1][0]] = 1
+#             else:
+#                 thirdDic[row[1][0]] += 1
 #
-frame = DataFrame(studentsDataAppBinDic)
-frame.to_csv("C:\\Users\\rihun\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\AppBin.csv")
+# print(sorted(firstDic.items(), key=lambda row : row[1], reverse=True))
+# print(sorted(secondDic.items(), key=lambda row : row[1], reverse=True))
+# print(sorted(thirdDic.items(), key=lambda row : row[1], reverse=True))
 
 
 #

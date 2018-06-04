@@ -20,7 +20,7 @@ surveyData = pd.read_csv("C:\\Users\\rihun\\Dropbox (KAIST Dr.M)\\htdocs\\Hatche
 
 rawData = pd.read_csv("C:\\Users\\rihun\\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\Data1.csv",
                       names=["Frequency", "Session", "Duration", "SessionAppNum", "Sex", "HighSchool", "UsageRatio",
-                             "TOP10DurationEntropy", "TOP10FrequencyEntropy", "SAS", "SCORE", "SCROLL", "KEY", "SHORT", "SILENT", "VIBRATE", "NORMAL", "LATE"])
+                             "TOP10DurationEntropy", "TOP10FrequencyEntropy", "SAS", "SCORE", "SCROLL", "KEY", "SHORT", "SILENT", "VIBRATE", "NORMAL", "LATE", "INTER"])
 
 binDurationData = pd.read_csv("C:\\Users\\rihun\\Dropbox (KAIST Dr.M)\\htdocs\\Hatchery\\EvolutionChamber\\studentBinDurationDic.csv",
                       names=["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15"])
@@ -588,14 +588,14 @@ from sklearn.naive_bayes import GaussianNB
 
 
 # 티 테스트
-frequencyTop10 = [3.386,4.073,4.639,4.703,4.803,4.946,5.567,5.585,5.816,5.894]
-frequencyTop90 = [19.736,19.811,19.848,20,20.145,20.163,20.393,21.205,27.743,27.932,]
-
-A1 = [float(row) for index, row in enumerate(frequencyTop10)]
-A2 = [round(row, 3) for index, row in enumerate(frequencyTop90)]
-
-print(round(np.mean(A1), 3), round(np.std(A1), 3))
-print(round(np.mean(A2), 3), round(np.std(A2), 3))
-
-tTestResult = stats.ttest_rel(A2, A1)
-print("The T-statistic is %.3f and the p-value is %.3f" % tTestResult)
+# frequencyTop10 = [3.386,4.073,4.639,4.703,4.803,4.946,5.567,5.585,5.816,5.894]
+# frequencyTop90 = [19.736,19.811,19.848,20,20.145,20.163,20.393,21.205,27.743,27.932,]
+#
+# A1 = [float(row) for index, row in enumerate(frequencyTop10)]
+# A2 = [round(row, 3) for index, row in enumerate(frequencyTop90)]
+#
+# print(round(np.mean(A1), 3), round(np.std(A1), 3))
+# print(round(np.mean(A2), 3), round(np.std(A2), 3))
+#
+# tTestResult = stats.ttest_rel(A2, A1)
+# print("The T-statistic is %.3f and the p-value is %.3f" % tTestResult)

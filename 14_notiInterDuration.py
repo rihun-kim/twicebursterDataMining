@@ -42,8 +42,13 @@ for studentIndex in range(0, 84):
             interNotiDuration.append(row)
 
     if len(interNotiDuration) != 0:
-        studentsNotiInterDurationArray.append(round(sum(interNotiDuration) / len(interNotiDuration), 3))
+        studentsNotiInterDurationArray.append([studentIndex, round(sum(interNotiDuration) / len(interNotiDuration), 3)])
 
-plt.boxplot(studentsNotiInterDurationArray)
-plt.show()
+#
+#
+# 노티 인터듀레이션 박스플롯 그리기
+# plt.boxplot(studentsNotiInterDurationArray)
+# plt.show()
 
+for row in studentsNotiInterDurationArray:
+    print(row)
