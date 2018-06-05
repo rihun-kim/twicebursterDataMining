@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 #
 #
-# 수업스케줄 뽑아내기
+# 수업시간표 뽑아내기
 classDic = {}
 for row in sqlite3.connect(getDatabasePathing("SCHEDULEDATABASE.db")).execute("SELECT * FROM SCHEDULETABLE"):
     startTime = datetime.datetime.strptime(list(row)[4][3:8], "%H:%M")
@@ -32,7 +32,7 @@ for studentIndex in range(0, 84):
 
     #
     #
-    # 수업시간 사용시간대 뽑아내기
+    # 75분 수업에서 스마트폰 사용시간대 뽑아내고, 데이터베이스로 만들기
     classUsageArray = []
     for className, entranceTime, exitTime in attendanceTimeArray:
         for usageRow in sqlite3.connect(studentDataPath + "\\USAGEDATABASE.db").execute("SELECT * FROM USAGETABLE WHERE '" + entranceTime + "' <= STARTTIME and ENDTIME <= '" + exitTime + "'"):

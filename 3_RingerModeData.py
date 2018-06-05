@@ -46,7 +46,7 @@ for studentIndex in range(0, 84):
 #         ringerSum += ringerRow[1]
 #
 #     print(round(normal/ringerSum, 3)) #, round(vibrate/ringerSum, 3), round(normal/ringerSum, 3))
-
+#
 # #
 # #
 # # 링거모드 학생들 데이터 합치기

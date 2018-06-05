@@ -1,8 +1,6 @@
 from twicebursterDataMining.RH_Library import *
 from Bunker.Marines import *
-from pandas import DataFrame
 import matplotlib.pyplot as plt
-import numpy as np
 
 #
 #
@@ -51,23 +49,23 @@ for studentIndex in range(0, 84):
 #
 #
 # 전체 학생들의 수업시 Session, Duration, Frequency 박스플롯 그리기
-# sessionTotal, durationTotal, frequencyTotal = [], [], []
-# for row in studentsData:
-#     sessionTotal.append(row[0])
-#     durationTotal.append(row[1])
-#     frequencyTotal.append(row[2])
-#
-# plt.figure(figsize=(4, 5))
-# plt.boxplot(sessionTotal, labels=("session", ))
-# plt.show()
-#
-# plt.boxplot(durationTotal)
-# plt.show()
-#
-# plt.figure(figsize=(4, 5))
-# plt.boxplot(frequencyTotal, labels=("frequency", ))
-# plt.show()
-#
-# plt.scatter(sessionTotal, frequencyTotal)
-# plt.show()
+sessionTotal, durationTotal, frequencyTotal = [], [], []
+for row in studentsData:
+    sessionTotal.append(row[0])
+    durationTotal.append(row[1])
+    frequencyTotal.append(row[2])
+
+plt.figure(figsize=(4, 5))
+plt.boxplot(sessionTotal, labels=("session", ))
+plt.show()
+
+plt.boxplot(durationTotal)
+plt.show()
+
+plt.figure(figsize=(4, 5))
+plt.boxplot(frequencyTotal, labels=("frequency", ))
+plt.show()
+
+plt.scatter(sessionTotal, frequencyTotal)
+plt.show()
 

@@ -49,7 +49,7 @@ import numpy as np
 # classUsageArray.sort()
 #
 #
-# 수업이외시, 수업시 CDF 플롯 그리기
+# 수업이외시, 수업시 세션 CDF 플롯 그리기
 # counts, bin_edges = np.histogram(notClassUsageArray, bins=10000)
 # cdf = np.cumsum(counts)
 # plt.plot(bin_edges[1:], cdf/cdf[-1], '.b', markersize="2")
@@ -63,59 +63,48 @@ import numpy as np
 
 #
 #
-# 수업이외시, 수업시 인터세션 비교
-notClassUsageArray, classUsageArray = [], []
-for studentIndex in range(0, 1):
-    studentDataPath = getStudentDataPathing(studentIndex)
-    print(studentDataPath)
-
-    #
-    #
-    # 출석시간 뽑아내기
-    attendanceTimeArray = []
-    for attendanceRow in sqlite3.connect(getDatabasePathing("ATTENDANCEDATABASE.db")).execute("SELECT * FROM ATTENDANCETABLE WHERE ID==" + "'" + getStudentID(studentIndex) + "'"):
-        for row in attendanceRow[2:]:
-            if row == "":
-                continue
-            attendanceTimeArray.append([attendanceRow[1], row.split("~")[0], row.split("~")[1]])
-    attendanceTimeArray = sorted(attendanceTimeArray, key=lambda row: row[1])
-
-    #
-    #
-    # 출석시간대 빼고 사용시간 뽑아내기
-    notAttendanceTimeArray = []
-    for usageRow in sqlite3.connect(studentDataPath + "\\USAGEDATABASE.db").execute("SELECT * FROM USAGETABLE;"):
-        SKIP = False
-        for attendanceRow in attendanceTimeArray:
-            if (attendanceRow[1] < usageRow[1]) and (usageRow[2] < attendanceRow[2]):
-                SKIP = True
-                break
-
-        if not SKIP:
-            notAttendanceTimeArray.append([getStudentID(studentIndex), usageRow[0], usageRow[1], usageRow[2], usageRow[3]])
-
-    #
-    #
-    # 수업이외시, 수업시 데이터 준비하기
-    for row in sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT * FROM CLASSUSAGETABLE"):
-        classUsageArray.append(row)
-
-    for row in notAttendanceTimeArray:
-        notClassUsageArray.append(timeToSecFormating(row[4]))
-
-    for row in classUsageArray:
-        print(row)
-
-# notClassUsageArray.sort()
-# classUsageArray.sort()
-
-
-# 수업이외시, 수업시 CDF 플롯 그리기
-# counts, bin_edges = np.histogram(notClassUsageArray, bins=10000)
-# cdf = np.cumsum(counts)
-# plt.plot(bin_edges[1:], cdf/cdf[-1], '.b', markersize="2")
+# 수업시 인터세션 뽑아내기
+# studentsInterSessionDic = {}
+# for studentIndex in range(0, 84):
+#     studentDataPath = getStudentDataPathing(studentIndex)
+#     print(studentDataPath)
 #
-# counts, bin_edges = np.histogram(classUsageArray, bins=1000)
+#     interSession, queue = [], []
+#     for i, row in enumerate(sqlite3.connect(studentDataPath + "\\CLASSUSAGEDATABASE.db").execute("SELECT * FROM CLASSUSAGETABLE")):
+#         if len(queue) == 0:
+#             queue.append(row)
+#         else:
+#             if queue[-1][1] == row[1]:
+#                 queue.append(row)
+#             else:
+#                 length = len(queue)
+#                 for index in range(0, length - 1):
+#                     # print(queue[index + 1][4]+"     "+queue[index][5]+"  ")
+#                     if (elapsedTimeCalculating(queue[index][5], queue[index + 1][4])) == 0:
+#                         # print(1.0)
+#                         interSession.append(1.0)
+#                     else:
+#                         # print(elapsedTimeCalculating(queue[index][5], queue[index + 1][4]))
+#                         interSession.append(elapsedTimeCalculating(queue[index][5], queue[index + 1][4]))
+#                 queue.clear()
+#                 queue.append(row)
+#
+#     studentsInterSessionDic[studentIndex] = interSession
+
+#
+#
+# 수업시 인터세션 박스플롯, CDF 플롯 그리기
+# plt.boxplot([np.mean(eachStudent) for eachStudent in studentsInterSessionDic.values()])
+# plt.show()
+#
+# studentsInterSessionArray = []
+# for eachStudent in studentsInterSessionDic.values():
+#     for row in eachStudent:
+#         studentsInterSessionArray.append(row)
+#
+# studentsInterSessionArray.sort()
+#
+# counts, bin_edges = np.histogram(studentsInterSessionArray, bins=1000)
 # cdf = np.cumsum(counts)
 # plt.plot(bin_edges[1:], cdf/cdf[-1], '.r', markersize="2")
 #
