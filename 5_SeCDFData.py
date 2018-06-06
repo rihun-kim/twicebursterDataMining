@@ -80,12 +80,9 @@ for studentIndex in range(0, 84):
             else:
                 length = len(queue)
                 for index in range(0, length - 1):
-                    # print(queue[index + 1][4]+"     "+queue[index][5]+"  ")
                     if (elapsedTimeCalculating(queue[index][5], queue[index + 1][4])) == 0:
-                        # print(1.0)
                         interSession.append(1.0)
                     else:
-                        # print(elapsedTimeCalculating(queue[index][5], queue[index + 1][4]))
                         interSession.append(elapsedTimeCalculating(queue[index][5], queue[index + 1][4]))
                 queue.clear()
                 queue.append(row)
